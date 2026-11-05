@@ -68,11 +68,14 @@
   .about { margin: 14px 0 12px; padding: 14px 12px; border-radius: 12px; background: var(--card); color: #d0d0d0; font-size: 13px; }
   .about b { display: block; color: var(--text); font-size: 14px; margin-bottom: 4px; }
   /* 카톡 아이디: 아래 배너 대신 맨 위 오른쪽에 카톡 로고 + match(사용자 11-05). 누르면 아이디 복사 */
+  /* '좀 더 꽉 차게 잘 보이게, 위치 살짝 내리고' → 글자·로고 키우고 여백 줄임, 로고 사진 높이 가운데에 맞춤 */
   .head .t { flex: 1; min-width: 0; }
-  .head .row { display: flex; align-items: center; gap: 8px; }
-  .kid { margin-left: auto; display: flex; align-items: center; gap: 6px; border: 0; border-radius: 99px; padding: 5px 12px 5px 6px;
-         background: #fee500; color: #3a1d1d; font-size: 16px; font-weight: 800; cursor: pointer; }
-  .kid svg { width: 26px; height: 24px; flex: none; font-family: "Pretendard Variable", Pretendard, Arial, sans-serif; }
+  .head p { flex-wrap: wrap; column-gap: 4px; }
+  .head p .nw { white-space: nowrap; }
+  .kid { margin-left: auto; align-self: center; flex: none; display: flex; align-items: center; gap: 5px; border: 0; border-radius: 99px;
+         padding: 4px 14px 4px 5px; background: #fee500; color: #3a1d1d; font-size: 20px; font-weight: 900; line-height: 1;
+         cursor: pointer; }
+  .kid svg { width: 34px; height: 31px; flex: none; font-family: "Pretendard Variable", Pretendard, Arial, sans-serif; }
 </style>
 </head>
 <body>
@@ -83,12 +86,10 @@
   <div class="head">
     <img src="logo.png" alt="더매치">
     <div class="t">
-      <div class="row">
-        <h1>더매치</h1>
-        <button type="button" class="kid" id="copyId" title="카카오톡 ID 복사"><svg viewBox="0 0 46 42" aria-label="카카오톡"><path d="M23 2C11.4 2 2 9.4 2 18.6c0 5.9 3.9 11.1 9.8 14l-2.4 8.6c-.2.7.6 1.3 1.2.9l10.2-6.8c.7.1 1.5.1 2.2.1 11.6 0 21-7.4 21-16.6S34.6 2 23 2z" fill="#3a1d1d"/><text x="23" y="23.3" text-anchor="middle" font-size="12.5" font-weight="800" letter-spacing=".3" fill="#fee500">TALK</text></svg><span id="kidText">match</span></button>
-      </div>
-      <p><svg class="yt"><use href="#yt"/></svg>YouTube 24시간 무료 라이브 소개팅</p>
+      <h1>더매치</h1>
+      <p><svg class="yt"><use href="#yt"/></svg><span class="nw">YouTube 24시간</span><span class="nw">무료 라이브 소개팅</span></p>
     </div>
+    <button type="button" class="kid" id="copyId" title="카카오톡 ID 복사"><svg viewBox="0 0 46 42" aria-label="카카오톡"><path d="M23 2C11.4 2 2 9.4 2 18.6c0 5.9 3.9 11.1 9.8 14l-2.4 8.6c-.2.7.6 1.3 1.2.9l10.2-6.8c.7.1 1.5.1 2.2.1 11.6 0 21-7.4 21-16.6S34.6 2 23 2z" fill="#3a1d1d"/><text x="23" y="23.3" text-anchor="middle" font-size="12.5" font-weight="800" letter-spacing=".3" fill="#fee500">TALK</text></svg><span id="kidText">match</span></button>
   </div>
 
   <div class="now" id="now">
