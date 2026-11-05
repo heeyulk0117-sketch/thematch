@@ -67,18 +67,12 @@
   footer { margin-top: 20px; color: var(--dim); font-size: 12px; text-align: center; line-height: 1.7; }
   .about { margin: 14px 0 12px; padding: 14px 12px; border-radius: 12px; background: var(--card); color: #d0d0d0; font-size: 13px; }
   .about b { display: block; color: var(--text); font-size: 14px; margin-bottom: 4px; }
-  /* 카톡 아이디 카드(사용자 11-05 '카카오톡 로고랑 match 크게 - 있어 보이게') */
-  /* 카카오 공식 버튼 모양: 노랑 #FEE500, 검은 말풍선, 글자 검정 85% */
-  .kakao { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 12px; background: #fee500;
-           color: rgba(0, 0, 0, .85); text-align: left; }
-  .kakao svg.talk { width: 56px; height: 51px; flex: none; font-family: "Pretendard Variable", Pretendard, Arial, sans-serif; }
-  .kakao .k { flex: 1; min-width: 0; }
-  .kakao .k1 { font-size: 15px; font-weight: 600; color: rgba(0, 0, 0, .7); line-height: 1.3; }
-  .kakao .k2 { font-size: 30px; font-weight: 800; line-height: 1.2; letter-spacing: 0; }
-  .kakao .k2 small { font-size: 16px; font-weight: 700; margin-right: 6px; color: rgba(0, 0, 0, .55); }
-  .kakao { flex-wrap: wrap; }  /* 휴대폰 폭에서 글씨가 꺾이지 않게 복사 버튼은 아래 한 줄 전체로 */
-  .kakao button { flex: 1 0 100%; margin-top: 2px; border: 0; border-radius: 10px; padding: 12px; background: rgba(0, 0, 0, .85);
-                  color: #fee500; font-size: 15px; font-weight: 700; cursor: pointer; }
+  /* 카톡 아이디: 아래 배너 대신 맨 위 오른쪽에 카톡 로고 + match(사용자 11-05). 누르면 아이디 복사 */
+  .head .t { flex: 1; min-width: 0; }
+  .head .row { display: flex; align-items: center; gap: 8px; }
+  .kid { margin-left: auto; display: flex; align-items: center; gap: 6px; border: 0; border-radius: 99px; padding: 5px 12px 5px 6px;
+         background: #fee500; color: #3a1d1d; font-size: 16px; font-weight: 800; cursor: pointer; }
+  .kid svg { width: 26px; height: 24px; flex: none; font-family: "Pretendard Variable", Pretendard, Arial, sans-serif; }
 </style>
 </head>
 <body>
@@ -88,8 +82,11 @@
 <main>
   <div class="head">
     <img src="logo.png" alt="더매치">
-    <div>
-      <h1>더매치</h1>
+    <div class="t">
+      <div class="row">
+        <h1>더매치</h1>
+        <button type="button" class="kid" id="copyId" title="카카오톡 ID 복사"><svg viewBox="0 0 46 42" aria-label="카카오톡"><path d="M23 2C11.4 2 2 9.4 2 18.6c0 5.9 3.9 11.1 9.8 14l-2.4 8.6c-.2.7.6 1.3 1.2.9l10.2-6.8c.7.1 1.5.1 2.2.1 11.6 0 21-7.4 21-16.6S34.6 2 23 2z" fill="#3a1d1d"/><text x="23" y="23.3" text-anchor="middle" font-size="12.5" font-weight="800" letter-spacing=".3" fill="#fee500">TALK</text></svg><span id="kidText">match</span></button>
+      </div>
       <p><svg class="yt"><use href="#yt"/></svg>YouTube 24시간 무료 라이브 소개팅</p>
     </div>
   </div>
@@ -121,15 +118,6 @@
       <b>24시간 무료 라이브 소개팅, 더매치</b>
       라이브로 카톡 연결해 주는 무료 소개팅<br>
       구독하고 라이브 알림 받기
-    </div>
-    <div class="kakao">
-      <!-- 말풍선만으로는 카톡인지 몰라서(사용자 11-05) 카카오톡 앱 아이콘처럼 TALK 말풍선 + '카카오톡' 글자 -->
-      <svg class="talk" viewBox="0 0 46 42" aria-label="카카오톡"><path d="M23 2C11.4 2 2 9.4 2 18.6c0 5.9 3.9 11.1 9.8 14l-2.4 8.6c-.2.7.6 1.3 1.2.9l10.2-6.8c.7.1 1.5.1 2.2.1 11.6 0 21-7.4 21-16.6S34.6 2 23 2z" fill="#3a1d1d"/><text x="23" y="23.3" text-anchor="middle" font-size="12.5" font-weight="800" letter-spacing=".3" fill="#fee500">TALK</text></svg>
-      <div class="k">
-        <div class="k1">카카오톡으로 무료 소개팅 지원</div>
-        <div class="k2"><small>ID</small>match</div>
-      </div>
-      <button type="button" id="copyId">카톡 ID 복사하기</button>
     </div>
   </footer>
 </main>
@@ -205,7 +193,10 @@ function draw(live) {
 
 // 카톡 ID 복사(틱톡·인스타 안 브라우저는 clipboard API 가 막힐 수 있어 예전 방식으로도)
 $("copyId").addEventListener("click", () => {
-  const done = () => { $("copyId").textContent = "복사됨"; };
+  const done = () => {
+    $("kidText").textContent = "복사됨";
+    setTimeout(() => { $("kidText").textContent = "match"; }, 1500);
+  };
   const old = () => {
     const t = document.createElement("textarea");
     t.value = "match";
