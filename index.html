@@ -65,6 +65,8 @@
   .m.on img { outline: 2px solid var(--red); outline-offset: 2px; }
   .m.on .r { color: #fff; background: var(--red); padding: 2px 8px; border-radius: 4px; font-weight: 700; }
   footer { margin-top: 20px; color: var(--dim); font-size: 12px; text-align: center; line-height: 1.7; }
+  .fb { display: none; position: fixed; left: 16px; right: 16px; bottom: 16px; padding: 14px; border-radius: 12px; background: #f1f1f1;
+        color: #0f0f0f; font-weight: 700; text-align: center; box-shadow: 0 4px 20px rgba(0, 0, 0, .5); }
   .about { margin: 14px 0 12px; padding: 14px 12px; border-radius: 12px; background: var(--card); color: #d0d0d0; font-size: 13px; }
   .about b { display: block; color: var(--text); font-size: 14px; margin-bottom: 4px; }
   /* 카톡 아이디: 아래 배너 대신 맨 위 오른쪽에 카톡 로고 + match(사용자 11-05). 누르면 아이디 복사 */
@@ -122,6 +124,7 @@
     </div>
   </footer>
 </main>
+<a class="fb" id="webFallback" href="#">YouTube 앱이 안 열리면 여기를 눌러 웹으로 보기</a>
 <script>
 // 멤버 순서(사용자 11-05 '몽멘 융군제 킹우진 도민호 우상2'), 평소 방송 시간, 채널 사진.
 // 누가 방송 중인지는 봇이 live.json 에 적는다(3분마다 확인).
@@ -152,8 +155,14 @@ function openYT(web) {
     location.href = "intent://" + web.replace(/^https:\/\//, "") + "#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url="
       + encodeURIComponent(web) + ";end";
   } else if (/iPhone|iPad|iPod/i.test(ua)) {
+    // 아이폰은 'YouTube에서 열기?' 확인 창이 떠 있는 동안에도 페이지가 보이는 상태라, 시간 지나 웹으로 보내면 확인 창을 덮어
+    // 웹으로 열려 버렸다(사용자 11-05 '아이폰인데 웹으로 열리는데'). 그래서 자동으로 웹으로 보내지 않고 '웹으로 보기' 링크만 띄운다.
     location.href = web.replace(/^https:\/\/www\./, "youtube://www.");
-    setTimeout(() => { if (document.visibilityState === "visible") location.href = web; }, 1500);
+    setTimeout(() => {
+      if (document.visibilityState !== "visible") return;
+      $("webFallback").href = web;
+      $("webFallback").style.display = "block";
+    }, 2500);
   } else {
     location.href = web;
   }
@@ -161,7 +170,7 @@ function openYT(web) {
 // 유튜브로 가는 링크(구독 버튼 빼고)는 눌러도 앱으로
 document.addEventListener("click", (e) => {
   const a = e.target.closest("a[href^='https://www.youtube.com/']");
-  if (!a || a.classList.contains("sub")) return;
+  if (!a || a.classList.contains("sub") || a.id === "webFallback") return;
   e.preventDefault();
   openYT(a.href);
 });
