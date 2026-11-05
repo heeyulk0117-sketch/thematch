@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>더매치 | YouTube 24시간 라이브 소개팅</title>
-<meta name="description" content="더매치 유튜브 채널 - 지금 방송 중인 YouTube 라이브로 바로 가요">
+<meta name="description" content="더매치 유튜브 채널 - 지금 방송 중인 YouTube 라이브로 바로 이동">
 <meta property="og:title" content="더매치 | YouTube 24시간 라이브 소개팅">
-<meta property="og:description" content="지금 방송 중인 YouTube 라이브로 바로 가요">
+<meta property="og:description" content="지금 방송 중인 YouTube 라이브로 바로 이동">
 <meta property="og:image" content="https://thematch.live/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -93,20 +93,20 @@
     </div>
     <a class="go" id="go" href="#"><svg class="yt"><use href="#yt"/></svg>YouTube에서 라이브 보기</a>
     <div class="bar" id="bar"></div>
-    <div class="count" id="count">곧 YouTube로 넘어가요 · 화면을 만지면 멈춰요</div>
+    <div class="count" id="count">곧 YouTube로 이동 · 화면 터치 시 멈춤</div>
   </div>
 
-  <h2>더매치 멤버 채널</h2>
-  <p class="idle" id="idle">지금은 방송 준비 중이에요. 채널을 눌러 YouTube에서 보세요.</p>
+  <h2>더매치 스트리머</h2>
+  <p class="idle" id="idle">지금은 방송 준비 중 · 채널을 눌러 YouTube에서 보기</p>
   <div class="list" id="list"></div>
   <footer>
-    모든 버튼은 youtube.com 의 더매치 공식 채널로 연결돼요
+    모든 버튼은 youtube.com 더매치 공식 채널로 연결
     <div class="about">
-      <b>24시간 라이브 소개팅, 더매치</b>
-      멤버들이 돌아가며 24시간 소개팅 라이브를 해요.<br>
-      구독하면 라이브 알림이 와요.
+      <b>24시간 무료 라이브 소개팅, 더매치</b>
+      스트리머가 라이브로 카톡 연결해 주는 무료 소개팅<br>
+      구독하고 라이브 알림 받기
     </div>
-    💌 소개팅 지원 카톡 'match'
+    💌 무료 소개팅 지원 카톡 'match'
   </footer>
 </main>
 <script>
@@ -173,7 +173,7 @@ function draw(live) {
   const stop = () => {
     clearTimeout(timer);
     $("bar").style.display = "none";
-    $("count").textContent = "자동 이동 멈춤 · 보고 싶은 채널을 누르세요";
+    $("count").textContent = "자동 이동 멈춤 · 보고 싶은 채널 선택";
     for (const ev of evs) removeEventListener(ev, stop, true);
   };
   for (const ev of evs) addEventListener(ev, stop, { capture: true, passive: true });
