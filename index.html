@@ -7,7 +7,11 @@
 <meta name="description" content="더매치 유튜브 채널 - 지금 방송 중인 YouTube 라이브로 바로 가요">
 <meta property="og:title" content="더매치 | YouTube 24시간 라이브 소개팅">
 <meta property="og:description" content="지금 방송 중인 YouTube 라이브로 바로 가요">
-<meta property="og:image" content="https://thematch.live/logo.png">
+<meta property="og:image" content="https://thematch.live/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://thematch.live/">
 <meta name="theme-color" content="#0f0f0f">
 <link rel="icon" href="logo.png">
@@ -46,15 +50,19 @@
   h2 { font-size: 16px; margin: 0 0 8px; }
   .idle { color: var(--dim); font-size: 13px; margin: 0 0 10px; display: none; }
   .list { display: grid; gap: 2px; }
-  .m { display: flex; align-items: center; gap: 12px; padding: 10px 4px; border-bottom: 1px solid var(--line); }
+  .m { display: flex; align-items: center; gap: 8px; padding: 10px 4px; border-bottom: 1px solid var(--line); }
+  .m .main { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; }
   .m img { width: 44px; height: 44px; border-radius: 50%; flex: none; background: var(--card); }
   .m .n { flex: 1; min-width: 0; }
-  .m .n b { display: block; font-size: 15px; }
+  .m .n b { display: block; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .m .n span { color: var(--dim); font-size: 12px; }
   .m .r { font-size: 12px; color: var(--dim); text-align: right; flex: none; }
+  .sub { flex: none; padding: 6px 12px; border-radius: 99px; background: #f1f1f1; color: #0f0f0f; font-size: 13px; font-weight: 700; }
   .m.on img { outline: 2px solid var(--red); outline-offset: 2px; }
   .m.on .r { color: #fff; background: var(--red); padding: 2px 8px; border-radius: 4px; font-weight: 700; }
   footer { margin-top: 20px; color: var(--dim); font-size: 12px; text-align: center; line-height: 1.7; }
+  .about { margin: 14px 0 12px; padding: 14px 12px; border-radius: 12px; background: var(--card); color: #d0d0d0; font-size: 13px; }
+  .about b { display: block; color: var(--text); font-size: 14px; margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -91,7 +99,16 @@
   <h2>더매치 멤버 채널</h2>
   <p class="idle" id="idle">지금은 방송 준비 중이에요. 채널을 눌러 YouTube에서 보세요.</p>
   <div class="list" id="list"></div>
-  <footer>모든 버튼은 youtube.com 의 더매치 공식 채널로 연결돼요<br>💌 소개팅 지원 카톡 'match'</footer>
+  <footer>
+    모든 버튼은 youtube.com 의 더매치 공식 채널로 연결돼요
+    <div class="about">
+      <b>24시간 라이브 소개팅, 더매치</b>
+      유튜브에서 24시간 이어지는 라이브 소개팅 방송이에요.<br>
+      멤버들이 시간대를 나눠 소개팅·토크를 실시간으로 진행해요.<br>
+      채널을 구독하면 라이브가 시작될 때 알림을 받을 수 있어요.
+    </div>
+    💌 소개팅 지원 카톡 'match'
+  </footer>
 </main>
 <script>
 // 멤버 순서(사용자 11-05 '몽멘 융군제 킹우진 도민호 우상2'), 평소 방송 시간, 채널 사진.
@@ -120,10 +137,13 @@ function draw(live) {
   const on = MEMBERS.filter((m) => live[m.ch]);
   const off = MEMBERS.filter((m) => !live[m.ch]);
   for (const m of on.concat(off)) {
-    const a = document.createElement("a");
+    // 줄 = [채널(라이브·채널로)] + [구독(유튜브 구독 확인 창이 바로 뜨는 주소)]
+    const a = document.createElement("div");
     a.className = "m" + (live[m.ch] ? " on" : "");
-    a.href = live[m.ch] ? liveUrl(live[m.ch]) : chanUrl(m);
-    a.innerHTML = "<img alt=''><div class='n'><b></b><span></span></div><div class='r'></div><svg class='yt'><use href='#yt'/></svg>";
+    a.innerHTML = "<a class='main'><img alt=''><div class='n'><b></b><span></span></div><div class='r'></div></a>"
+      + "<a class='sub'>구독</a>";
+    a.querySelector(".main").href = live[m.ch] ? liveUrl(live[m.ch]) : chanUrl(m);
+    a.querySelector(".sub").href = "https://www.youtube.com/" + m.handle + "?sub_confirmation=1";
     noImg(a.querySelector("img"));
     a.querySelector("img").src = m.av;
     a.querySelector("b").textContent = m.name;
