@@ -134,8 +134,8 @@ const noImg = (img) => { img.onerror = () => { img.style.visibility = "hidden"; 
 
 function draw(live) {
   const on = MEMBERS.filter((m) => live[m.ch]);
-  const off = MEMBERS.filter((m) => !live[m.ch]);
-  for (const m of on.concat(off)) {
+  // 목록은 방송 여부와 상관없이 정한 순서 그대로(사용자 11-05 '몽멘이 맨 위로'). 방송 중인 채널은 LIVE 표시만
+  for (const m of MEMBERS) {
     // 줄 = [채널(라이브·채널로)] + [구독(유튜브 구독 확인 창이 바로 뜨는 주소)]
     const a = document.createElement("div");
     a.className = "m" + (live[m.ch] ? " on" : "");
