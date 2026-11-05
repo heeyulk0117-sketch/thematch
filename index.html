@@ -34,9 +34,27 @@
   .head h1 { margin: 0; font-size: 20px; }
   .head p { margin: 2px 0 0; color: var(--dim); font-size: 13px; display: flex; align-items: center; gap: 6px; }
 
+  /* 유튜브 채널 화면처럼(사용자 11-06 '유튜브 공식 연결 채널 느낌'): 채널 배너 → 프로필 → 설명 → 구독 → 탭.
+     유튜브 인증 표시·'유튜브 공식' 같은 말은 넣지 않는다(상표 정책). 더매치 자체의 공식 사이트로만 보이게 */
+  .banner { display: block; border-radius: 12px; overflow: hidden; margin-bottom: 16px; background: var(--card); aspect-ratio: 1138 / 188; }
+  .banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .head img { width: 72px; height: 72px; }
+  .head h1 { font-size: 24px; font-weight: 800; }
+  .desc { margin: 0 0 12px; color: var(--dim); font-size: 13px; }
+  .desc b { color: var(--text); font-weight: 600; }
+  .sub.big { display: block; padding: 10px; font-size: 15px; text-align: center; margin-bottom: 14px; }
+  .tabs { display: flex; gap: 22px; border-bottom: 1px solid var(--line); margin: 0 -16px 16px; padding: 0 16px; overflow-x: auto; }
+  .tabs a { padding: 10px 0; color: var(--dim); font-weight: 600; font-size: 15px; white-space: nowrap; }
+  .tabs a.on { color: var(--text); border-bottom: 2px solid var(--text); }
+
   .now { display: none; margin-bottom: 20px; }
   .thumb { position: relative; display: block; border-radius: 12px; overflow: hidden; background: #000; aspect-ratio: 16 / 9; }
   .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* 실제 유튜브 플레이어(소리 끔 자동재생). 못 불러오면 아래 썸네일이 그대로 보인다 */
+  .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  /* 방송은 세로 화면이라 가로(16:9) 틀에 넣으면 휴대폰에서 화면이 한쪽으로 몰리고 양옆이 검게 남았다(사용자 11-06 '오른쪽으로 몰려있다')
+     → 틀을 세로(9:16)로, 높이는 화면의 절반까지만 해서 아래 버튼이 너무 밀려나지 않게 */
+  #player { aspect-ratio: 9 / 16; height: min(50vh, 520px); width: auto; max-width: 100%; margin: 0 auto; }
   .badge { position: absolute; left: 8px; bottom: 8px; background: var(--red); color: #fff; font-size: 12px; font-weight: 700;
            padding: 2px 6px; border-radius: 4px; display: flex; align-items: center; gap: 4px; }
   .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
@@ -69,12 +87,13 @@
         color: #0f0f0f; font-weight: 700; text-align: center; box-shadow: 0 4px 20px rgba(0, 0, 0, .5); }
   .about { margin: 14px 0 12px; padding: 14px 12px; border-radius: 12px; background: var(--card); color: #d0d0d0; font-size: 13px; }
   .about b { display: block; color: var(--text); font-size: 14px; margin-bottom: 4px; }
-  /* 카톡 아이디: 아래 배너 대신 맨 위 오른쪽에 카톡 로고 + match(사용자 11-05). 누르면 아이디 복사 */
+  /* 카톡 아이디: 카톡 로고 + match, 누르면 아이디 복사. 11-05 맨 위 오른쪽 → 11-06 '카톡 배너가 있으니 유튜브 공식 느낌이 안 난다' → 채널 목록 아래로 */
   /* '좀 더 꽉 차게 잘 보이게, 위치 살짝 내리고' → 글자·로고 키우고 여백 줄임, 로고 사진 높이 가운데에 맞춤 */
   .head .t { flex: 1; min-width: 0; }
   .head p { flex-wrap: wrap; column-gap: 4px; }
   .head p .nw { white-space: nowrap; }
-  .kid { margin-left: auto; align-self: center; flex: none; display: flex; align-items: center; gap: 5px; border: 0; border-radius: 99px;
+  .kidRow { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; color: var(--dim); font-size: 13px; }
+  .kid { flex: none; display: flex; align-items: center; gap: 5px; border: 0; border-radius: 99px;
          padding: 4px 14px 4px 5px; background: #fee500; color: #3a1d1d; font-size: 20px; font-weight: 900; line-height: 1;
          cursor: pointer; }
   .kid svg { width: 34px; height: 31px; flex: none; font-family: "Pretendard Variable", Pretendard, Arial, sans-serif; }
@@ -85,21 +104,27 @@
   <symbol id="yt" viewBox="0 0 28 20"><rect width="28" height="20" rx="5" fill="#ff0033"/><path d="M11.2 5.6 18.6 10l-7.4 4.4z" fill="#fff"/></symbol>
 </svg>
 <main>
+  <a class="banner" href="https://www.youtube.com/@더매치_몽멘"><img src="banner.jpg" alt="더매치 24h Live"></a>
   <div class="head">
     <img src="logo.png" alt="더매치">
     <div class="t">
       <h1>더매치</h1>
-      <p><svg class="yt"><use href="#yt"/></svg><span class="nw">YouTube</span><span class="nw">무료 라이브 소개팅</span></p>
+      <p><svg class="yt"><use href="#yt"/></svg><span class="nw">YouTube 무료 라이브 소개팅</span></p>
     </div>
-    <button type="button" class="kid" id="copyId" title="카카오톡 ID 복사"><svg viewBox="0 0 46 42" aria-label="카카오톡"><path d="M23 2C11.4 2 2 9.4 2 18.6c0 5.9 3.9 11.1 9.8 14l-2.4 8.6c-.2.7.6 1.3 1.2.9l10.2-6.8c.7.1 1.5.1 2.2.1 11.6 0 21-7.4 21-16.6S34.6 2 23 2z" fill="#3a1d1d"/><text x="23" y="23.3" text-anchor="middle" font-size="12.5" font-weight="800" letter-spacing=".3" fill="#fee500">TALK</text></svg><span id="kidText">match</span></button>
   </div>
+  <p class="desc">소개팅 · 실시간 카톡매칭</p>
+  <a class="sub big" href="https://www.youtube.com/@더매치_몽멘?sub_confirmation=1">구독</a>
+  <nav class="tabs">
+    <a class="on" href="#">홈</a>
+    <a href="#chs">라이브</a>
+    <a href="https://www.youtube.com/@더매치_몽멘/shorts">Shorts</a>
+    <a href="https://www.youtube.com/@더매치_몽멘/videos">동영상</a>
+  </nav>
 
   <div class="now" id="now">
-    <a class="thumb" id="thumbLink" href="#">
+    <div class="thumb" id="player">
       <img id="thumb" alt="">
-      <svg class="play"><use href="#yt"/></svg>
-      <span class="badge">실시간</span>
-    </a>
+    </div>
     <div class="meta">
       <img id="nowAv" alt="">
       <div>
@@ -112,9 +137,13 @@
     <div class="count" id="count">곧 YouTube로 이동 · 화면 터치 시 멈춤</div>
   </div>
 
-  <h2>더매치 채널</h2>
+  <h2 id="chs">더매치 채널</h2>
   <p class="idle" id="idle">지금은 방송 준비 중 · 채널을 눌러 YouTube에서 보기</p>
   <div class="list" id="list"></div>
+  <div class="kidRow">
+    <span>카톡 아이디 · 눌러서 복사</span>
+    <button type="button" class="kid" id="copyId" title="카카오톡 ID 복사"><svg viewBox="0 0 46 42" aria-label="카카오톡"><path d="M23 2C11.4 2 2 9.4 2 18.6c0 5.9 3.9 11.1 9.8 14l-2.4 8.6c-.2.7.6 1.3 1.2.9l10.2-6.8c.7.1 1.5.1 2.2.1 11.6 0 21-7.4 21-16.6S34.6 2 23 2z" fill="#3a1d1d"/><text x="23" y="23.3" text-anchor="middle" font-size="12.5" font-weight="800" letter-spacing=".3" fill="#fee500">TALK</text></svg><span id="kidText">match</span></button>
+  </div>
   <footer>
     모든 버튼은 youtube.com 더매치 공식 채널로 연결
     <div class="about">
@@ -122,6 +151,8 @@
       실시간 카톡 연결해 주는 무료 소개팅<br>
       구독하고 라이브 알림 받기
     </div>
+    더매치 공식 사이트 · 운영 더매치스튜디오<br>
+    © 더매치
   </footer>
 </main>
 <a class="fb" id="webFallback" href="#">YouTube 앱이 안 열리면 여기를 눌러 웹으로 보기</a>
@@ -201,7 +232,13 @@ function draw(live) {
   const pick = on.find((m) => m.ch === want) || on[Math.floor(Math.random() * on.length)];
   const id = live[pick.ch];
   const url = liveUrl(id);
-  $("go").href = $("thumbLink").href = url;
+  $("go").href = url;
+  const fr = document.createElement("iframe");
+  fr.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&mute=1&playsinline=1&rel=0";
+  fr.allow = "autoplay; encrypted-media; picture-in-picture";
+  fr.allowFullscreen = true;
+  fr.title = "YouTube 라이브";
+  $("player").appendChild(fr);
   $("thumb").onerror = () => { $("thumb").onerror = null; $("thumb").src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg"; };
   $("thumb").src = "https://i.ytimg.com/vi/" + id + "/hqdefault_live.jpg";
   noImg($("nowAv"));
@@ -219,8 +256,12 @@ function draw(live) {
     $("bar").style.display = "none";
     $("count").textContent = "자동 이동 멈춤 · 보고 싶은 채널 선택";
     for (const ev of evs) removeEventListener(ev, stop, true);
+    removeEventListener("blur", onBlur);
   };
   for (const ev of evs) addEventListener(ev, stop, { capture: true, passive: true });
+  // 플레이어를 누르면 터치가 이 페이지로 안 오고 창의 포커스만 플레이어로 간다: 그때도 자동 이동을 멈춘다
+  const onBlur = () => setTimeout(() => { if (document.activeElement === fr) stop(); }, 0);
+  addEventListener("blur", onBlur);
 }
 
 // 카톡 ID 복사(틱톡·인스타 안 브라우저는 clipboard API 가 막힐 수 있어 예전 방식으로도)
