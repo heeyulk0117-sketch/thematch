@@ -71,12 +71,14 @@
   /* 카카오 공식 버튼 모양: 노랑 #FEE500, 검은 말풍선, 글자 검정 85% */
   .kakao { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 12px; background: #fee500;
            color: rgba(0, 0, 0, .85); text-align: left; }
-  .kakao svg { width: 30px; height: 30px; flex: none; }
+  .kakao svg.talk { width: 56px; height: 51px; flex: none; font-family: "Pretendard Variable", Pretendard, Arial, sans-serif; }
   .kakao .k { flex: 1; min-width: 0; }
-  .kakao .k1 { font-size: 13px; font-weight: 500; color: rgba(0, 0, 0, .6); line-height: 1.3; }
-  .kakao .k2 { font-size: 22px; font-weight: 700; line-height: 1.3; letter-spacing: 0; }
-  .kakao button { flex: none; border: 0; border-radius: 8px; padding: 9px 14px; background: rgba(0, 0, 0, .85); color: #fee500;
-                  font-size: 13px; font-weight: 600; cursor: pointer; }
+  .kakao .k1 { font-size: 15px; font-weight: 600; color: rgba(0, 0, 0, .7); line-height: 1.3; }
+  .kakao .k2 { font-size: 30px; font-weight: 800; line-height: 1.2; letter-spacing: 0; }
+  .kakao .k2 small { font-size: 16px; font-weight: 700; margin-right: 6px; color: rgba(0, 0, 0, .55); }
+  .kakao { flex-wrap: wrap; }  /* 휴대폰 폭에서 글씨가 꺾이지 않게 복사 버튼은 아래 한 줄 전체로 */
+  .kakao button { flex: 1 0 100%; margin-top: 2px; border: 0; border-radius: 10px; padding: 12px; background: rgba(0, 0, 0, .85);
+                  color: #fee500; font-size: 15px; font-weight: 700; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -121,12 +123,13 @@
       구독하고 라이브 알림 받기
     </div>
     <div class="kakao">
-      <svg viewBox="0 0 30 30" aria-label="카카오톡"><path d="M15 3.5C7.8 3.5 2 8.1 2 13.8c0 3.7 2.5 6.9 6.2 8.7l-1.4 5.1c-.1.5.4.8.8.6l6-4c.5.1 1 .1 1.4.1 7.2 0 13-4.6 13-10.3S22.2 3.5 15 3.5z" fill="#000"/></svg>
+      <!-- 말풍선만으로는 카톡인지 몰라서(사용자 11-05) 카카오톡 앱 아이콘처럼 TALK 말풍선 + '카카오톡' 글자 -->
+      <svg class="talk" viewBox="0 0 46 42" aria-label="카카오톡"><path d="M23 2C11.4 2 2 9.4 2 18.6c0 5.9 3.9 11.1 9.8 14l-2.4 8.6c-.2.7.6 1.3 1.2.9l10.2-6.8c.7.1 1.5.1 2.2.1 11.6 0 21-7.4 21-16.6S34.6 2 23 2z" fill="#3a1d1d"/><text x="23" y="23.3" text-anchor="middle" font-size="12.5" font-weight="800" letter-spacing=".3" fill="#fee500">TALK</text></svg>
       <div class="k">
-        <div class="k1">무료 소개팅 지원 · 카카오톡 ID</div>
-        <div class="k2">match</div>
+        <div class="k1">카카오톡으로 무료 소개팅 지원</div>
+        <div class="k2"><small>ID</small>match</div>
       </div>
-      <button type="button" id="copyId">ID 복사</button>
+      <button type="button" id="copyId">카톡 ID 복사하기</button>
     </div>
   </footer>
 </main>
