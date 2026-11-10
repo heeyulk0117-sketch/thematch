@@ -158,7 +158,7 @@
 </main>
 <a class="fb" id="webFallback" href="#">YouTube 앱이 안 열리면 여기를 눌러 웹으로 보기</a>
 <script>
-// 멤버 순서(사용자 11-05 '몽멘 융군제 킹우진 도민호 우상2', 11-06 우상2 → 우영2, 상빈2 추가), 평소 방송 시간, 채널 사진.
+// 멤버 순서(사용자 11-05 '몽멘 융군제 킹우진 도민호 우상2', 11-06 우상2 → 우영2, 상빈2 추가, 11-11 상빈22 추가), 평소 방송 시간, 채널 사진.
 // 누가 방송 중인지는 봇이 live.json 에 적는다(3분마다 확인).
 const MEMBERS = [
   { ch: "몽멘", name: "더매치스튜디오 (몽멘)", handle: "@더매치_몽멘", time: "밤 8시",
@@ -175,6 +175,9 @@ const MEMBERS = [
   // 상빈2: 11-06 새 채널(heeyul2 계정). 봇이 아직 이 채널 방송을 안 봐서 LIVE 표시는 안 뜨고, 누르면 채널 라이브 화면으로
   { ch: "상빈2", name: "더매치_상빈2", handle: "@더매치_상빈2", time: "랜덤",
     av: "https://yt3.googleusercontent.com/BHNEroeziKmJCYppZQ8vAS2KeQbzjEwVFP3Ijby2P1mm6scRIinodD0GQ9QyYv31hNgFTjO2=s240-c-k-c0x00ffffff-no-rj" },
+  // 상빈22: 11-11 새 채널(임시 계정). 봇 config 이름도 '상빈22' 라 live.json 의 ch 와 맞음
+  { ch: "상빈22", name: "더매치_상빈22", handle: "@더매치_상빈22", time: "랜덤",
+    av: "https://yt3.googleusercontent.com/_Xsq-UuAc3kAOsHEKhR9yHD5oZlaL-M068PaPFKuguHp16eFzv5LEtnzlOwe8oc7A1IhP1ZJ=s240-c-k-c0x00ffffff-no-rj" },
 ];
 const WAIT_MS = 3000;      // 자동으로 넘어가기까지(사용자 11-05 1.5초 → 3초 → 5초 → 추천대로 3초 'ㅇㅋ')
 const STALE_MIN = 150;     // live.json 이 이보다 오래되면 봇이 멈춘 것으로 보고 자동 이동 안 함
